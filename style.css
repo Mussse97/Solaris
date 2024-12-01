@@ -1,0 +1,230 @@
+/* Grundinställningar */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+}
+#box {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+    display: none;
+}
+
+/* Bakgrund */
+.space-background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #000; /* Svart rymd */
+    overflow: hidden;
+
+}
+
+/* Stjärnor */
+.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+    opacity: 0.8;
+}
+
+/* Keyframes för "glittring" av stjärnor */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.2); }
+}
+
+/* Rubrik */
+h1 {
+    margin: 20px 0 10px;
+    font-size: 3em;
+    color: #FFD700;
+}
+
+/* Text-input */
+.command-input {
+    width: 300px;
+    padding: 10px;
+    border: 2px solid #FFD700;
+    border-radius: 5px;
+    background: #000;
+    color: white;
+    font-size: 1em;
+}
+
+/* Rymdskepp */
+.spaceship {
+    position: relative;
+    margin: 50px auto 0;
+    width: 100px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: bounce 3s infinite ease-in-out; /* Animation för studsande */
+}
+
+/* Skeppets kropp */
+.spaceship .body {
+    position: relative;
+    width: 50px;
+    height: 100px;
+    background: linear-gradient(90deg, #555, #999);
+    border-radius: 50% 50% 30% 30%;
+    z-index: 2;
+    transform: rotate(90deg); /* Roterar skeppet mot höger */
+}
+
+
+/* Skeppets motor */
+.spaceship .engine {
+    position: absolute;
+    bottom: 60px;
+    left: -20px;
+    width: 20px;
+    height: 30px;
+    background: red;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #FFD700;
+    z-index: 2;
+}
+
+/* Keyframes för studsande animation */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); } /* Höj skeppet lite */
+}
+/*-----------------------------------------------------------------------------*/
+
+/* Planeter-container */
+.planets {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    pointer-events: none; /* Planeter ska inte påverkas av klick */
+}
+
+/* Grundstil för planeter */
+/* Grundstil för planeter */
+.planet {
+    position: fixed; /* För att kunna animera dem över skärmen */
+    right: -100px; /* Start utanför högerkanten */
+    top: 50%; /* Startpunkt för vertikal position */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    opacity: 0; /* Dölj planeter initialt */
+    transition: none; /* Ingen animation vid start */
+}
+
+/* När en planet animeras */
+.planet.animate {
+    opacity: 1; /* Gör planeten synlig under animationen */
+    transition: right 3s ease-in-out, transform 3s ease-in-out, opacity 3s ease-in-out;
+}
+
+
+/* Specifika planeter */
+.merkurius {
+    background-color: gray;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.venus {
+    background-color: yellow;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.jorden {
+    background-color: blue;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.mars {
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.jupiter {
+    background-color: orange;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.saturnus {
+    background-color: goldenrod;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.uranus {
+    background-color: lightblue;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+
+.neptunus {
+    background-color: darkblue;
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    right: -100px; /* Start off screen */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    transition: right 3s ease; /* Smooth transition */
+}
+/*-------------------------------------------------------------*/
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solaris</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js" defer></script>
+</head>
+<body>
+    <div class="space-background">
+        <h1>Solaris</h1>
+        <div class="space"></div>
+        <input type="text" placeholder="Enter command..." class="command-input">
+        <div class="spaceship">
+            <div class="body"></div>
+            <div class="engine"></div>
+        </div>
+    </div>
+    <div class="planets">
+        <div class="solen planet"></div>
+        <div class="merkurius planet"></div>
+        <div class="venus planet"></div>
+        <div class="jorden planet"></div>
+        <div class="mars planet"></div>
+        <div class="jupiter planet"></div>
+        <div class="saturnus planet"></div>
+        <div class="uranus planet"></div>
+        <div class="neptunus planet"></div>
+    </div>
+    <div id="box"></div>
+    
+    <script>
+        // Funktion för att skapa stjärnor
+        const createStars = (count) => {
+            const spaceBackground = document.querySelector('.space-background');
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 2 + 1; // Slumpmässig storlek
+                const x = Math.random() * window.innerWidth; // Slumpmässig X-position
+                const y = Math.random() * window.innerHeight; // Slumpmässig Y-position
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${y}px`;
+                star.style.left = `${x}px`;
+                spaceBackground.appendChild(star);
+            }
+        };
+
+        // Skapa 100 stjärnor
+        createStars(100);
+    </script>
+</body>
+</html>

@@ -1,23 +1,69 @@
+
 /* Grundinställningar */
 body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family:monospace;
     color: white;
     text-align: center;
+    height: 100vh;
 }
-#box {
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+/* Retro datorskärm container */
+#retro-computer {
+    position: fixed;
+    top: 30%;
+    left: 5%;
+    width: 400px;
+    height: 500px;
+    background: #aaa; /* Yttre grå box */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     display: none;
 }
+
+/* Inre skärm */
+.screen {
+    width: 85%;
+    height: 85%;
+    background: black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+/* Skärmens innehåll */
+.screen-content {
+    color: #00ff00; /* Grön text */
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    text-align: left;
+    padding: 10px;
+    overflow: hidden; /* För att hantera långa texter */
+    line-height: 1.5;
+    overflow-y: auto; /* Vertikal scroll om texten är för lång */
+    max-height: 100%; /* Begränsa höjden till skärmens storlek */
+    scrollbar-width: thin; /* Tunn scrollbar i Firefox */
+    
+}
+
+/* Justera rubrik och text */
+.screen-content h2 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.screen-content p {
+    margin: 0;
+    font-size: 14px;
+}
+/*---------------------------------------------------------------------------*/
 
 /* Bakgrund */
 .space-background {

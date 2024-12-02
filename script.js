@@ -1,6 +1,14 @@
 const apiUrl = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/bodies";
 const apiKey = "solaris-2ngXkR6S02ijFrTP";
 let planets_list = []; // Variabel för att lagra API-data
+// Hämta elementen
+const inputField = document.querySelector('.command-input');
+const box = document.getElementById('retro-computer');
+
+// Retro datorskärm - hämta element för att visa information
+const planetTitle = document.getElementById("planet-title");
+const planetDesc = document.getElementById("planet-desc");
+let currentPlanetElement = null; // Håll reda på den planet som visas just nu
 
 // Funktion för att hämta information från API:et
 async function fetchPlanetData() {
@@ -25,13 +33,7 @@ async function fetchPlanetData() {
 // Anropa funktionen
 fetchPlanetData();
 
-// Hämta elementen
-const inputField = document.querySelector('.command-input');
-const box = document.getElementById('retro-computer');
 
-// Retro datorskärm - hämta element för att visa information
-const planetTitle = document.getElementById("planet-title");
-const planetDesc = document.getElementById("planet-desc");
 
 // Lyssna på Enter-knappen
 inputField.addEventListener('keypress', (e) => {
@@ -55,25 +57,43 @@ inputField.addEventListener('keypress', (e) => {
             }
         } else {
             console.log("No match found. Please enter a valid planet name.");
+            planetTitle.textContent = "Error..";
+            planetDesc.textContent = "Finns ingen planet med detta namn!";
+            box.style.display= "flex";
         }
     }
 });
 
-// Funktion för att flyga till planet
-function flyToPlanet(planet) {
-    console.log("Flying to planet...");
-    // Gör planeten synlig och starta utanför skärmen
-    planet.style.position = "fixed";
-    planet.style.top = "50%"; // Vertikal position (kan justeras)
-    planet.style.opacity = 1;
+
+
+async function flyToPlanet(newPlanet) {
+    if (currentPlanetElement) {
+        // Om det redan finns en planet, flytta ut den
+        await flyOutPlanet(currentPlanetElement);
+        currentPlanetElement = null;
+    }
+    resetPlanetStyle(newPlanet);
+    // Sätt den nya planeten som synlig och starta animationen
+    currentPlanetElement = newPlanet;
+    newPlanet.style.position = "fixed";
+    newPlanet.style.right = "-100px"; // Starta utanför skärmen till höger
+    newPlanet.style.top = "50%";
+    newPlanet.style.opacity = 1;
     box.style.display = "flex";
 
-    // Flytta planeten mot mitten av skärmen
     setTimeout(() => {
-        planet.style.right = "35%"; // Flytta planeten till mitten (horisontellt)
-        planet.style.transform = "translateY(-50%) scale(6.5)"; // Centrera vertikalt och zooma in
+        newPlanet.style.transition = "transform 2s ease-in-out, right 2s ease-in-out";
+        newPlanet.style.right = "35%"; // Flytta planeten till mitten
+        newPlanet.style.transform = "translateY(-50%) scale(6.5)"; // Zooma in planeten
     }, 100); // Starta animationen efter en liten fördröjning
 }
+
+function resetPlanetStyle(planet) {
+    
+    planet.style.left = ""; // Återställ position från flyOutPlanet
+    planet.style.opacity = 0; // Dölj planeten innan den visas igen
+}
+
 
 // Funktion för att uppdatera retro-datorskärmen
 function updateRetroScreen(planet) {
@@ -87,3 +107,18 @@ function updateRetroScreen(planet) {
         planetDesc.textContent = planet.desc; // Uppdatera beskrivningen
     }, 2000); // 2 sekunders fördröjning
 }
+
+
+function flyOutPlanet(planet) {
+    return new Promise((resolve) => {
+        planet.style.transition = "transform 2s ease-in-out, left 2s ease-in-out"; // Animera planeten bort
+        planet.style.left = "-100%"; // Flytta planeten utanför skärmen till vänster
+        planet.style.transform = "translateY(-50%) scale(0.5)"; // Minska planetens storlek under flytten
+        setTimeout(() => {
+            planet.style.opacity = 0; // Dölj planeten efter animationen
+            resolve(); // Fortsätt till nästa steg efter animationen
+        }, 2000); // Matcha timeouten med transition-tiden
+    });
+}
+
+

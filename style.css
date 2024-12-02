@@ -167,110 +167,94 @@ h1 {
 /* Grundstil för planeter */
 /* Grundstil för planeter */
 .planet {
-    position: fixed; /* För att kunna animera dem över skärmen */
-    right: -100px; /* Start utanför högerkanten */
-    top: 50%; /* Startpunkt för vertikal position */
+    position: absolute;
+    bottom: 20%;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    opacity: 0; /* Dölj planeter initialt */
-    transition: none; /* Ingen animation vid start */
+    animation: idle 2s infinite alternate ease-in-out;
+    background: radial-gradient(circle at 30% 30%, #fff, #000); /* Grundläggande textur */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), /* Inre skugga för djup */
+                0 0 15px rgba(255, 255, 255, 0.2); /* Yttre glöd */
 }
 
-/* När en planet animeras */
-.planet.animate {
-    opacity: 1; /* Gör planeten synlig under animationen */
-    transition: right 3s ease-in-out, transform 3s ease-in-out, opacity 3s ease-in-out;
+/* Solen */
+.solen {
+    position: absolute;
+    bottom: 20%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #ffdd00, #ff9500);
+    box-shadow: inset 0 0 30px rgba(255, 150, 0, 0.7), 0 0 50px rgba(255, 200, 0, 0.8);
+    animation: idle 2s infinite alternate ease-in-out;
+    opacity: 0; /* Dölj solen tills den behövs */
+    transition: all 0.5s ease-in-out;
 }
 
-
-/* Specifika planeter */
+/* Merkurius */
 .merkurius {
-    background-color: gray;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at 30% 30%, #9e9e9e, #575757);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
+/* Venus */
 .venus {
-    background-color: yellow;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at center, #ffd1a4, #d59c6f);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
+/* Jorden */
 .jorden {
-    background-color: blue;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at 50% 50%, #6baed6, #084594);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
+/* Mars */
 .mars {
-    background-color: red;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at center, #e07b39, #a63c1c);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
+/* Jupiter */
 .jupiter {
-    background-color: orange;
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at 60% 40%, #d6b49a, #a67c52, #7a5326);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
+/* Saturnus */
 .saturnus {
-    background-color: goldenrod;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at center, #e8d5a3, #b3936e, #7a6136);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.2);
+    position: relative;
 }
 
+/* Saturnus ring */
+.saturnus::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(25deg);
+    width: 80px;
+    height: 20px;
+    border: 2px solid rgba(200, 150, 100, 0.5);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(200, 150, 100, 0.5);
+    background: transparent;
+}
+
+/* Uranus */
 .uranus {
-    background-color: lightblue;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at 50% 50%, #a3e0e0, #4ca1a1);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
+/* Neptunus */
 .neptunus {
-    background-color: darkblue;
-    width: 45px;
-    height: 45px;
-    position: absolute;
-    right: -100px; /* Start off screen */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    transition: right 3s ease; /* Smooth transition */
+    background: radial-gradient(circle at 50% 50%, #557fdc, #1e3f9d);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
 }
+
 /*-------------------------------------------------------------*/
 

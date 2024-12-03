@@ -8,6 +8,7 @@ body {
     color: white;
     text-align: center;
     height: 100vh;
+    overflow: hidden;
 }
 /* Retro datorskärm container */
 #retro-computer {
@@ -70,7 +71,8 @@ body {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-color: #000; /* Svart rymd */
+    background-color: #1B2735;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     overflow: hidden;
 
 }
@@ -182,8 +184,8 @@ h1 {
 .solen {
     position: absolute;
     bottom: 20%;
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: radial-gradient(circle at center, #ffdd00, #ff9500);
     box-shadow: inset 0 0 30px rgba(255, 150, 0, 0.7), 0 0 50px rgba(255, 200, 0, 0.8);

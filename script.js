@@ -1,6 +1,9 @@
-const apiUrl = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/bodies";
-const apiKey = "solaris-2ngXkR6S02ijFrTP";
-let planets_list = []; // Variabel för att lagra API-data
+// const apiUrl = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/bodies";
+// const apiKey = "solaris-2ngXkR6S02ijFrTP";
+
+let celestialBodies = []; // Variabel för att lagra API-data
+let currentPlanetElement = null; // Håll reda på den himlakropp som visas just nu
+
 // Hämta elementen
 const inputField = document.querySelector('.command-input');
 const box = document.getElementById('retro-computer');
@@ -8,117 +11,203 @@ const box = document.getElementById('retro-computer');
 // Retro datorskärm - hämta element för att visa information
 const planetTitle = document.getElementById("planet-title");
 const planetDesc = document.getElementById("planet-desc");
-let currentPlanetElement = null; // Håll reda på den planet som visas just nu
-
-// Funktion för att hämta information från API:et
-async function fetchPlanetData() {
-    try {
-        const response = await fetch(apiUrl, {
-            method: "GET",
-            headers: { "x-zocom": apiKey },
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        planets_list = data.bodies.filter(body => body.type === "planet");
-        console.log(data);
-    } catch (error) {
-        console.error("Error fetching planet data:", error);
-    }
-}
-
-// Anropa funktionen
-fetchPlanetData();
+const fire = document.getElementById("fire");
+const rocket = document.getElementById("rocket");
 
 
+let resp = fetch('https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/keys', {
+    method: 'POST',
+    
+})
+console.log(resp)
 
-// Lyssna på Enter-knappen
-inputField.addEventListener('keypress', (e) => {
+// //Funktion för att hämta information från API:et
+// async function fetchCelestialData() {
+//     try {
+//         const response = await fetch(apiUrl, {
+//             method: "GET",
+//             headers: { "x-zocom": apiKey },
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+//         celestialBodies = data.bodies.filter(body => body.type === "planet" || body.type === "star"); // Filtrera planeter och solen
+//         console.log(celestialBodies); // Debug: visa alla data
+//     } catch (error) {
+//         console.error("Error fetching celestial data:", error);
+//     }
+// }
+
+// // Anropa funktionen
+// fetchCelestialData();
+
+
+
+// const apiKeyUrl = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/keys"; // Endpoint för att hämta nyckel
+// const apiUrl = "https://n5n3eiyjb0.execute-api.eu-north-1.amazonaws.com/bodies";    // Endpoint för att hämta data
+// let apiKey = null;                                   // Variabel för att lagra nyckeln
+
+// // Funktion för att hämta API-nyckeln
+// async function fetchApiKey() {
+//     try {
+//         const response = await fetch(apiKeyUrl, {
+//             method: 'POST',
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+//         console.log(response)
+
+//         const data = await response.json();
+//         console.log(data)
+//         apiKey = data.apiKey; // Hämta nyckeln från API:et
+//         console.log("API Key retrieved:", apiKey);
+//     } catch (error) {
+//         console.error("Error fetching API Key:", error);
+//     }
+// }
+
+// // Funktion för att hämta information från API:et
+// async function fetchPlanetData() {
+//     if (!apiKey) {
+//         console.error("API key is not set. Fetch the key first.");
+//         return;
+//     }
+
+//     try {
+//         const response = await fetch(apiUrl, {
+//             method: "GET", // GET för att hämta planetdata
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "x-zocom": apiKey, // Använd nyckeln som header
+//             },
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+//         const planets = data.bodies.filter(body => body.type === "planet");
+//         console.log("Planets data:", planets);
+//     } catch (error) {
+//         console.error("Error fetching planet data:", error);
+//     }
+// }
+
+
+// async function initialize() {
+//     await fetchApiKey(); 
+//     await fetchPlanetData(); 
+// }
+
+// initialize(); 
+
+
+
+
+
+inputField.addEventListener('keypress', async (e) => {
     if (e.key === 'Enter') {
         const userInput = inputField.value.trim().toLowerCase(); // Hämta användarens inmatning
 
-        // Jämför inmatningen med planetnamnen från API
-        const matchedPlanet = planets_list.find(planet => planet.name.toLowerCase() === userInput);
+        // Jämför inmatningen med namn på himlakroppar från API
+        const matchedBody = celestialBodies.find(body => body.name.toLowerCase() === userInput);
+        rocket.style.display = "block"
+         fire.style.opacity = "1"
+        if (matchedBody) {
+            console.log(`Match found: ${matchedBody.name}`);
+            const bodyElement = document.querySelector(`.${matchedBody.name.toLowerCase()}`);
 
-        if (matchedPlanet) {
-            console.log(`Match found: ${matchedPlanet.name}`);
-            const planetElement = document.querySelector(`.${matchedPlanet.name.toLowerCase()}`);
             
-            // Uppdatera retro-datorskärmen med planetinformation
-            updateRetroScreen(matchedPlanet);
+            updateRetroScreen(matchedBody);
 
-            if (planetElement) {
-                flyToPlanet(planetElement); // Anropa flyToPlanet för matchande planet
+            if (bodyElement) {
+                await flyToPlanet(bodyElement); 
             } else {
-                console.error("Planet element not found in the DOM");
+                console.error("Celestial body element not found in the DOM");
             }
         } else {
-            console.log("No match found. Please enter a valid planet name.");
+            console.log("No match found. Please enter a valid celestial body name.");
             planetTitle.textContent = "Error..";
-            planetDesc.textContent = "Finns ingen planet med detta namn!";
-            box.style.display= "flex";
+            planetDesc.textContent = "Finns ingen himlakropp med detta namn!";
+            box.style.display = "flex";
         }
     }
 });
 
-
-
-async function flyToPlanet(newPlanet) {
+// Funktion för att flyga till planeten eller solen
+async function flyToPlanet(newBody) {
     if (currentPlanetElement) {
-        // Om det redan finns en planet, flytta ut den
-        await flyOutPlanet(currentPlanetElement);
+        await flyOutPlanet(currentPlanetElement); // Flytta ut befintlig planet
         currentPlanetElement = null;
     }
-    resetPlanetStyle(newPlanet);
-    // Sätt den nya planeten som synlig och starta animationen
-    currentPlanetElement = newPlanet;
-    newPlanet.style.position = "fixed";
-    newPlanet.style.right = "-100px"; // Starta utanför skärmen till höger
-    newPlanet.style.top = "50%";
-    newPlanet.style.opacity = 1;
+    resetPlanetStyle(newBody);
+    currentPlanetElement = newBody; // Uppdatera nuvarande planet-element
+    
+
+    newBody.style.position = "fixed";
+    newBody.style.right = "-100px";
+    newBody.style.top = "55%";
+    newBody.style.opacity = 1;
     box.style.display = "flex";
 
     setTimeout(() => {
-        newPlanet.style.transition = "transform 2s ease-in-out, right 2s ease-in-out";
-        newPlanet.style.right = "35%"; // Flytta planeten till mitten
-        newPlanet.style.transform = "translateY(-50%) scale(6.5)"; // Zooma in planeten
-    }, 100); // Starta animationen efter en liten fördröjning
+        newBody.style.transition = "transform 2s ease-in-out, right 2s ease-in-out";
+        newBody.style.right = "25%";
+        newBody.style.transform = "translateY(-50%) scale(6.5)";
+    }, 100);
 }
 
-function resetPlanetStyle(planet) {
+// Funktion för att återställa stil på planet
+function resetPlanetStyle(body) {
+    body.style.left = "";
+    body.style.opacity = 0;
+}
+
+function flyOutPlanet(planet) {
     
-    planet.style.left = ""; // Återställ position från flyOutPlanet
-    planet.style.opacity = 0; // Dölj planeten innan den visas igen
-}
+        planet.style.transition = "transform 2s ease-in-out, left 2s ease-in-out";
+        planet.style.left = "-100%";
+        planet.style.transform = "translateY(-50%) scale(0.5)";
+       
+    };
 
 
-// Funktion för att uppdatera retro-datorskärmen
-function updateRetroScreen(planet) {
-    // Visa "Laddar planet information ......." omedelbart
+// Funktion för att uppdatera retro-skärmen
+function updateRetroScreen(body) {
+    currentPlanet = body; // Uppdatera nuvarande planet
     planetTitle.textContent = "Laddar planet information .......";
     planetDesc.textContent = "";
 
-    // Efter en kort fördröjning, uppdatera med planetens riktiga data
     setTimeout(() => {
-        planetTitle.textContent = planet.name + " / " + planet.latinName; // Uppdatera titeln
-        planetDesc.textContent = planet.desc; // Uppdatera beskrivningen
-    }, 2000); // 2 sekunders fördröjning
+        planetTitle.textContent = `${body.name} / ${body.latinName || "N/A"}`;
+        planetDesc.textContent = body.desc;
+        fire.style.opacity = "0"
+    }, 2000);
 }
+const toggleInfoBtn = document.getElementById('toggle-info-btn');
+let showDetailedInfo = false; 
+toggleInfoBtn.addEventListener('click', () => {
+    if (!currentPlanet) {
+        console.error("Ingen planet vald!");
+        return;
+    }
 
-
-function flyOutPlanet(planet) {
-    return new Promise((resolve) => {
-        planet.style.transition = "transform 2s ease-in-out, left 2s ease-in-out"; // Animera planeten bort
-        planet.style.left = "-100%"; // Flytta planeten utanför skärmen till vänster
-        planet.style.transform = "translateY(-50%) scale(0.5)"; // Minska planetens storlek under flytten
-        setTimeout(() => {
-            planet.style.opacity = 0; // Dölj planeten efter animationen
-            resolve(); // Fortsätt till nästa steg efter animationen
-        }, 2000); // Matcha timeouten med transition-tiden
-    });
-}
-
-
+    if (showDetailedInfo) {
+        planetDesc.textContent = currentPlanet.desc;
+        toggleInfoBtn.textContent = "Visa mer info";
+    } else {
+        planetDesc.innerHTML = `
+            <strong>Omkrets:</strong> ${currentPlanet.circumference || "N/A"} km<br>
+            <strong>Avstånd från solen:</strong> ${currentPlanet.distance || "N/A"} km<br>
+            <strong>Antal månar:</strong> ${currentPlanet.moons || 0}
+        `;
+        toggleInfoBtn.textContent = "Visa beskrivning";
+    }
+    showDetailedInfo = !showDetailedInfo;
+});

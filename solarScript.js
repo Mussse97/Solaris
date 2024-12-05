@@ -31,7 +31,7 @@
             }
             const data = await response.json();
             apiKey = data.key; 
-            console.log("API Key retrieved:", apiKey);
+            console.log("API Key retrieved");
 
             // Efter att API-nyckeln har hämtats, kalla på nästa funktion
             fetchCelestialData();

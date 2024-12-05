@@ -155,7 +155,7 @@
             planetDesc.innerHTML = `
                 <strong>Omkrets:</strong> ${currentPlanet.circumference} km<br>
                 <strong>Avstånd från solen:</strong> ${currentPlanet.distance || 0} km<br>
-                <strong>Tempraturen:</strong> ${"Dag: " + currentPlanet.temp.day + " C" + "<br>" + "Natt: " + currentPlanet.temp.night} C<br>
+                <strong>Tempraturen:</strong> ${"Dag: " + currentPlanet.temp.day + " °C" + "<br>" + "Natt: " + currentPlanet.temp.night} °C<br>
                 <strong>Antal månar:</strong> ${currentPlanet.moons.length + "<br>" + currentPlanet.moons}`;   
         }
         showDetailedInfo = !showDetailedInfo; // byter mellan information

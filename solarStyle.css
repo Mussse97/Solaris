@@ -249,6 +249,7 @@ body {
 
 #retro-computer {
     position: fixed;
+    display: flex;
     top: 30%;
     left: 5%;
     width: 400px;
@@ -267,6 +268,9 @@ body {
  background-color: red;
  border-radius: 50%;
  width: 30px;
+ height: 30px;
+ font-size: 10px;
+ cursor: pointer;
  
 }
 
@@ -291,7 +295,6 @@ body {
     font-size: 16px;
     text-align: left;
     padding: 10px;
-    
     line-height: 1.5;
     overflow-y: auto; 
     max-height: 100%; 
@@ -318,16 +321,17 @@ body {
   color: #FFD700;
   top: -190px;
   z-index: 5;
-  transition: all 0.3s ease; /* Mjuk övergång för effekten */
+  transition: all 0.3s ease; 
   cursor: pointer;
 }
 
 #solartitle:hover {
-  color: #FFF700; /* Ändra textens färg vid hover (valfritt) */
+  color: #FFF700; 
+  /*Glöd för titeln när man håller musen över*/
   text-shadow: 
-      0 0 10px rgba(255, 255, 0, 0.8), /* Inre glöd */
-      0 0 20px rgba(255, 200, 0, 0.6), /* Yttre glöd */
-      0 0 30px rgba(255, 150, 0, 0.4); /* Djupare glöd */
+      0 0 10px rgba(255, 255, 0, 0.8), 
+      0 0 20px rgba(255, 200, 0, 0.6), 
+      0 0 30px rgba(255, 150, 0, 0.4); 
 }
 
 
@@ -438,7 +442,7 @@ body {
     z-index: 5;
 }
 
-
+/*------------------------------------------repsonsivitet för tavlet och mobil--------------------------------------------------------------*/
   @media screen and (max-width: 1530px) {
     #rocket{
       display: flex;
